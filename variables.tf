@@ -53,6 +53,30 @@ variable "app_settings" {
   DESCRIPTION
 }
 
+variable "basic_auth" {
+  type = object({
+    password     = string
+    environments = string
+  })
+  default     = null
+  description = <<DESCRIPTION
+  This block controls basic authentication access.
+
+  ```terraform
+  basic auth = {
+    password = "password"
+    environments = "AllEnvironments"
+  }
+
+  ```
+  DESCRIPTION
+
+  validation {
+    condition     = var.basic_auth != null ? contains(["AllEnvironments", "StagingEnvironments"], var.basic_auth.environments) : true
+    error_message = "The `basic_auth` block must be set with a `password` and `environments`."
+  }
+}
+
 variable "branch" {
   type        = string
   default     = null

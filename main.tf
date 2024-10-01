@@ -7,6 +7,10 @@ resource "azurerm_static_web_app" "this" {
   sku_tier            = var.sku_tier
   tags                = var.tags
 
+  basic_auth {
+    environments = var.basic_auth.environments
+    password     = var.basic_auth.password
+  }
   dynamic "identity" {
     for_each = local.managed_identities.system_assigned_user_assigned
 

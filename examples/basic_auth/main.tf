@@ -50,15 +50,15 @@ module "staticsite" {
   name                = "${module.naming.static_web_app.name_unique}-free"
   resource_group_name = azurerm_resource_group.example.name
   location            = azurerm_resource_group.example.location
-  sku_size = "Standard"
-  sku_tier = "Standard"
+  sku_size            = "Standard"
+  sku_tier            = "Standard"
 
   app_settings = {
 
   }
 
   basic_auth = {
-    password = "P@ssword1234"
+    password     = "P@ssword1234"
     environments = "StagingEnvironments"
   }
 

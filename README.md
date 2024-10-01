@@ -119,6 +119,29 @@ Type: `map(string)`
 
 Default: `{}`
 
+### <a name="input_basic_auth"></a> [basic\_auth](#input\_basic\_auth)
+
+Description:   This block controls basic authentication access.
+
+  ```terraform
+  basic auth = {
+    password = "password"
+    environments = "AllEnvironments"
+  }
+
+```
+
+Type:
+
+```hcl
+object({
+    password     = string
+    environments = string
+  })
+```
+
+Default: `null`
+
 ### <a name="input_branch"></a> [branch](#input\_branch)
 
 Description: The branch of the repository to deploy.

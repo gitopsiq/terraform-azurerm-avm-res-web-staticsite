@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
 # Default example
 
-This deploys the module as a Free SKU Static Web App.
+This deploys the module as a Free SKU Static Web App leveraging basic authentication access.
 
 ```hcl
 terraform {
@@ -56,9 +56,16 @@ module "staticsite" {
   name                = "${module.naming.static_web_app.name_unique}-free"
   resource_group_name = azurerm_resource_group.example.name
   location            = azurerm_resource_group.example.location
+  sku_size            = "Standard"
+  sku_tier            = "Standard"
 
   app_settings = {
 
+  }
+
+  basic_auth = {
+    password     = "P@ssword1234"
+    environments = "StagingEnvironments"
   }
 
 }
