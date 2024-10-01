@@ -49,7 +49,7 @@ module "staticsite" {
   source = "../../"
 
   # source             = "Azure/avm-res-web-staticsite/azurerm"
-  # version = "0.3.3"
+  # version = "0.3.4"
 
   enable_telemetry = var.enable_telemetry
 
@@ -112,6 +112,10 @@ Default: `true`
 ## Outputs
 
 The following outputs are exported:
+
+### <a name="output_name"></a> [name](#output\_name)
+
+Description: The name of the static site.
 
 ### <a name="output_resource"></a> [resource](#output\_resource)
 

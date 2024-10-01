@@ -2,7 +2,7 @@ resource "azurerm_role_assignment" "this" {
   for_each = var.role_assignments
 
   principal_id                           = each.value.principal_id
-  scope                                  = azurerm_static_web_app.this.id
+  scope                                  = var.basic_auth == null ? azurerm_static_web_app.this[0].id : azurerm_static_web_app.this_basic_auth[0].id
   condition                              = each.value.condition
   condition_version                      = each.value.condition_version
   delegated_managed_identity_resource_id = each.value.delegated_managed_identity_resource_id

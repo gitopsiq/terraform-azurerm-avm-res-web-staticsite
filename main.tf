@@ -1,4 +1,46 @@
+# resource "azurerm_static_web_app" "this" {
+#   location            = coalesce(var.location)
+#   name                = var.name
+#   resource_group_name = var.resource_group_name
+#   app_settings        = var.app_settings
+#   sku_size            = var.sku_size
+#   sku_tier            = var.sku_tier
+#   tags                = var.tags
+
+#   dynamic "identity" {
+#     for_each = local.managed_identities.system_assigned_user_assigned
+
+#     content {
+#       type         = identity.value.identity_type
+#       identity_ids = identity.value.identity_resource_ids
+#     }
+#   }
+# }
+
 resource "azurerm_static_web_app" "this" {
+  count = var.basic_auth == null ? 1 : 0
+
+  location            = coalesce(var.location)
+  name                = var.name
+  resource_group_name = var.resource_group_name
+  app_settings        = var.app_settings
+  sku_size            = var.sku_size
+  sku_tier            = var.sku_tier
+  tags                = var.tags
+
+  dynamic "identity" {
+    for_each = local.managed_identities.system_assigned_user_assigned
+
+    content {
+      type         = identity.value.identity_type
+      identity_ids = identity.value.identity_resource_ids
+    }
+  }
+}
+
+resource "azurerm_static_web_app" "this_basic_auth" {
+  count = var.basic_auth != null ? 1 : 0
+
   location            = coalesce(var.location)
   name                = var.name
   resource_group_name = var.resource_group_name
@@ -31,7 +73,7 @@ resource "azapi_update_resource" "this" {
       branch        = coalesce(var.branch, "main")
     }
   })
-  resource_id = azurerm_static_web_app.this.id
+  resource_id = var.basic_auth == null ? azurerm_static_web_app.this[0].id : azurerm_static_web_app.this_basic_auth[0].id
 
   depends_on = [
     azurerm_static_web_app.this

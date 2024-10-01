@@ -3,7 +3,7 @@ resource "azurerm_management_lock" "this" {
 
   lock_level = var.lock.kind
   name       = coalesce(var.lock.name, "lock-${var.name}")
-  scope      = azurerm_static_web_app.this.id
+  scope      = var.basic_auth == null ? azurerm_static_web_app.this[0].id : azurerm_static_web_app.this_basic_auth[0].id
   notes      = var.lock.kind == "CanNotDelete" ? "Cannot delete the resource or its child resources." : "Cannot delete or modify the resource or its child resources."
 
   depends_on = [

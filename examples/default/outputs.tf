@@ -1,3 +1,8 @@
+output "name" {
+  description = "The name of the static site."
+  value       = module.staticsite.name
+}
+
 output "resource" {
   description = "The full output of the static site."
   sensitive   = true
